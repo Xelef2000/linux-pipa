@@ -262,6 +262,13 @@
 			no-map;
 		};
 
+		slpi_fastrpc_mem: slpi-fastrpc {
+        	compatible = "shared-dma-pool";
+        	size = <0x0 0x1000000>;
+        	alignment = <0x0 0x400000>;
+        	reusable;
+    	};
+
 		adsp_mem: adsp@8bb00000 {
 			reg = <0x0 0x8bb00000 0x0 0x2500000>;
 			no-map;
@@ -1283,6 +1290,7 @@
 &slpi {
 	firmware-name = "qcom/sm8250/xiaomi/pipa/slpi.mbn";
 	status = "okay";
+	memory-region = <&slpi_mem>, <&slpi_fastrpc_mem>;
 };
 
 &tlmm {
