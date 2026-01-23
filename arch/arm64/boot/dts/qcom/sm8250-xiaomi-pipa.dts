@@ -1288,9 +1288,17 @@
 };
 
 &slpi {
-	firmware-name = "qcom/sm8250/xiaomi/pipa/slpi.mbn";
-	status = "okay";
-	memory-region = <&slpi_mem>, <&slpi_fastrpc_mem>;
+    firmware-name = "qcom/sm8250/xiaomi/pipa/slpi.mbn";
+    status = "okay";
+    memory-region = <&slpi_mem>, <&slpi_fastrpc_mem>;
+    
+    glink-edge {
+        fastrpc {
+            compatible = "qcom,fastrpc";
+            memory-region = <&slpi_fastrpc_mem>;
+            label = "sdsp";
+        };
+    };
 };
 
 &tlmm {
