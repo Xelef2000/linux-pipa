@@ -274,6 +274,14 @@
 			no-map;
 		};
 
+		adsp_fastrpc_mem: adsp-fastrpc {
+        	compatible = "shared-dma-pool";
+        	size = <0x0 0x1000000>;
+        	alignment = <0x0 0x400000>;
+        	reusable;
+    	};
+    
+
 		spss_mem: spss@8e000000 {
 			reg = <0x0 0x8e000000 0x0 0x100000>;
 			no-map;
@@ -283,6 +291,13 @@
 			reg = <0x0 0x8e100000 0x0 0x4600000>;
 			no-map;
 		};
+
+		cdsp_fastrpc_mem: cdsp-fastrpc {
+        	compatible = "shared-dma-pool";
+        	size = <0x0 0x1000000>;
+        	alignment = <0x0 0x400000>;
+        	reusable;
+    	};
 
 		cont_splash_mem: cont-splash@9c000000 {
 			reg = <0x0 0x9c000000 0x0 0x2300000>;
@@ -310,6 +325,16 @@
 &adsp {
 	firmware-name = "qcom/sm8250/xiaomi/pipa/adsp.mbn";
 	status = "okay";
+
+	memory-region = <&adsp_mem>, <&adsp_fastrpc_mem>;
+    
+    glink-edge {
+        fastrpc {
+            compatible = "qcom,fastrpc";
+            memory-region = <&adsp_fastrpc_mem>;
+            label = "sdsp";
+        };
+    };
 };
 
 &apps_rsc {
@@ -581,6 +606,16 @@
 &cdsp {
 	firmware-name = "qcom/sm8250/xiaomi/pipa/cdsp.mbn";
 	status = "okay";
+
+	memory-region = <&cdsp_secure_heap>, <&cdsp_fastrpc_mem>;
+    
+    glink-edge {
+        fastrpc {
+            compatible = "qcom,fastrpc";
+            memory-region = <&cdsp_fastrpc_mem>;
+            label = "sdsp";
+        };
+    };
 };
 
 &camcc {
