@@ -332,7 +332,7 @@
         fastrpc {
             compatible = "qcom,fastrpc";
             memory-region = <&adsp_fastrpc_mem>;
-            label = "sdsp";
+            label = "adsp";
         };
     };
 };
@@ -613,7 +613,7 @@
         fastrpc {
             compatible = "qcom,fastrpc";
             memory-region = <&cdsp_fastrpc_mem>;
-            label = "sdsp";
+            label = "cdsp";
         };
     };
 };
