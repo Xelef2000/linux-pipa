@@ -126,7 +126,7 @@
 	gpio_keys: gpio-keys {
 		compatible = "gpio-keys";
 
-		pinctrl-0 = <&vol_up_n>, <&hall_sensor_default>;
+		pinctrl-0 = <&vol_up_n>, <&hall_sensor_default>, <&hall_sensor_fold_default>;
 		pinctrl-names = "default";
 
 		key-vol-up {
@@ -143,6 +143,16 @@
 			gpios = <&tlmm 110 GPIO_ACTIVE_LOW>;
 			linux,input-type = <EV_SW>;
 			linux,code = <SW_LID>;
+			debounce-interval = <15>;
+			linux,can-disable;
+			wakeup-source;
+		};
+
+		event-hall-sensor-fold {
+			label = "Hall Effect Sensor Fold";
+			gpios = <&tlmm 121 GPIO_ACTIVE_LOW>;
+			linux,input-type = <EV_SW>; /* EV_SW */
+			linux,code = <SW_TABLET_MODE>; /* SW_TABLET_MODE */
 			debounce-interval = <15>;
 			linux,can-disable;
 			wakeup-source;
@@ -1393,6 +1403,14 @@
 		function = "gpio";
 		drive-strength = <2>;
 		bias-pull-up;
+	};
+
+	hall_sensor_fold_default: hall-sensor-fold-default-state {
+		pins = "gpio121";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+		input-enable;
 	};
 
 	mclk0_active: mclk0-active-state {
